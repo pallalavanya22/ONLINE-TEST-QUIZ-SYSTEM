@@ -1,58 +1,72 @@
-"use strict";
+/*global navigator*/
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getHighestUnreleased = getHighestUnreleased;
-exports.getLowestImplementedVersion = getLowestImplementedVersion;
-exports.getLowestUnreleased = getLowestUnreleased;
-exports.isUnreleasedVersion = isUnreleasedVersion;
-exports.semverMin = semverMin;
-exports.semverify = semverify;
-var _semver = require("semver");
-var _helperValidatorOption = require("@babel/helper-validator-option");
-var _targets = require("./targets.js");
-const versionRegExp = /^(?:\d+|\d(?:\d?[^\d\n\r\u2028\u2029]\d+|\d{2,}(?:[^\d\n\r\u2028\u2029]\d+)?))$/;
-const v = new _helperValidatorOption.OptionValidator("@babel/helper-compilation-targets");
-function semverMin(first, second) {
-  return first && _semver.lt(first, second) ? first : second;
-}
-function semverify(version) {
-  if (typeof version === "string" && _semver.valid(version)) {
-    return version;
-  }
-  v.invariant(typeof version === "number" || typeof version === "string" && versionRegExp.test(version), `'${version}' is not a valid version`);
-  version = version.toString();
-  let pos = 0;
-  let num = 0;
-  while ((pos = version.indexOf(".", pos + 1)) > 0) {
-    num++;
-  }
-  return version + ".0".repeat(2 - num);
-}
-function isUnreleasedVersion(version, env) {
-  const unreleasedLabel = _targets.unreleasedLabels[env];
-  return !!unreleasedLabel && unreleasedLabel === version.toString().toLowerCase();
-}
-function getLowestUnreleased(a, b, env) {
-  const unreleasedLabel = _targets.unreleasedLabels[env];
-  if (a === unreleasedLabel) {
-    return b;
-  }
-  if (b === unreleasedLabel) {
-    return a;
-  }
-  return semverMin(a, b);
-}
-function getHighestUnreleased(a, b, env) {
-  return getLowestUnreleased(a, b, env) === a ? b : a;
-}
-function getLowestImplementedVersion(plugin, environment) {
-  const result = plugin[environment];
-  if (!result && environment === "android") {
-    return plugin.chrome;
-  }
-  return result;
-}
+const {
+  REGEX_BACKSLASH,
+  REGEX_REMOVE_BACKSLASH,
+  REGEX_SPECIAL_CHARS,
+  REGEX_SPECIAL_CHARS_GLOBAL
+} = require('./constants');
 
-//# sourceMappingURL=utils.js.map
+exports.isObject = val => val !== null && typeof val === 'object' && !Array.isArray(val);
+exports.hasRegexChars = str => REGEX_SPECIAL_CHARS.test(str);
+exports.isRegexChar = str => str.length === 1 && exports.hasRegexChars(str);
+exports.escapeRegex = str => str.replace(REGEX_SPECIAL_CHARS_GLOBAL, '\\$1');
+exports.toPosixSlashes = str => str.replace(REGEX_BACKSLASH, '/');
+
+exports.isWindows = () => {
+  if (typeof navigator !== 'undefined' && navigator.platform) {
+    const platform = navigator.platform.toLowerCase();
+    return platform === 'win32' || platform === 'windows';
+  }
+
+  if (typeof process !== 'undefined' && process.platform) {
+    return process.platform === 'win32';
+  }
+
+  return false;
+};
+
+exports.removeBackslashes = str => {
+  return str.replace(REGEX_REMOVE_BACKSLASH, match => {
+    return match === '\\' ? '' : match;
+  });
+};
+
+exports.escapeLast = (input, char, lastIdx) => {
+  const idx = input.lastIndexOf(char, lastIdx);
+  if (idx === -1) return input;
+  if (input[idx - 1] === '\\') return exports.escapeLast(input, char, idx - 1);
+  return `${input.slice(0, idx)}\\${input.slice(idx)}`;
+};
+
+exports.removePrefix = (input, state = {}) => {
+  let output = input;
+  if (output.startsWith('./')) {
+    output = output.slice(2);
+    state.prefix = './';
+  }
+  return output;
+};
+
+exports.wrapOutput = (input, state = {}, options = {}) => {
+  const prepend = options.contains ? '' : '^';
+  const append = options.contains ? '' : '$';
+
+  let output = `${prepend}(?:${input})${append}`;
+  if (state.negated === true) {
+    output = `(?:^(?!${output}).*$)`;
+  }
+  return output;
+};
+
+exports.basename = (path, { windows } = {}) => {
+  const segs = path.split(windows ? /[\\/]/ : '/');
+  const last = segs[segs.length - 1];
+
+  if (last === '') {
+    return segs[segs.length - 2];
+  }
+
+  return last;
+};
