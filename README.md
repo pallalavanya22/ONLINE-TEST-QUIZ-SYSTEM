@@ -1,63 +1,140 @@
-# React Redux
+# accepts
 
-Official React bindings for [Redux](https://github.com/reduxjs/redux).
-Performant and flexible.
+[![NPM Version][npm-version-image]][npm-url]
+[![NPM Downloads][npm-downloads-image]][npm-url]
+[![Node.js Version][node-version-image]][node-version-url]
+[![Build Status][github-actions-ci-image]][github-actions-ci-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/reduxjs/react-redux/test.yml?style=flat-square) [![npm version](https://img.shields.io/npm/v/react-redux.svg?style=flat-square)](https://www.npmjs.com/package/react-redux)
-[![npm downloads](https://img.shields.io/npm/dm/react-redux.svg?style=flat-square)](https://www.npmjs.com/package/react-redux)
-[![#redux channel on Discord](https://img.shields.io/badge/discord-redux@reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
+Higher level content negotiation based on [negotiator](https://www.npmjs.com/package/negotiator).
+Extracted from [koa](https://www.npmjs.com/package/koa) for general use.
+
+In addition to negotiator, it allows:
+
+- Allows types as an array or arguments list, ie `(['text/html', 'application/json'])`
+  as well as `('text/html', 'application/json')`.
+- Allows type shorthands such as `json`.
+- Returns `false` when no types match
+- Treats non-existent headers as `*`
 
 ## Installation
 
-### Create a React Redux App
+This is a [Node.js](https://nodejs.org/en/) module available through the
+[npm registry](https://www.npmjs.com/). Installation is done using the
+[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
 
-The recommended way to start new apps with React and Redux is by using [our official Redux+TS template for Vite](https://github.com/reduxjs/redux-templates), or by creating a new Next.js project using [Next's `with-redux` template](https://github.com/vercel/next.js/tree/canary/examples/with-redux).
-
-Both of these already have Redux Toolkit and React-Redux configured appropriately for that build tool, and come with a small example app that demonstrates how to use several of Redux Toolkit's features.
-
-```bash
-# Vite with our Redux+TS template
-# (using the `degit` tool to clone and extract the template)
-npx degit reduxjs/redux-templates/packages/vite-template-redux my-app
-
-# Next.js using the `with-redux` template
-npx create-next-app --example with-redux my-app
+```sh
+$ npm install accepts
 ```
 
-### An Existing React App
+## API
 
-React Redux 8.0 requires **React 16.8.3 or later** (or React Native 0.59 or later).
-
-To use React Redux with your React app, install it as a dependency:
-
-```bash
-# If you use npm:
-npm install react-redux
-
-# Or if you use Yarn:
-yarn add react-redux
+```js
+var accepts = require('accepts')
 ```
 
-You'll also need to [install Redux](https://redux.js.org/introduction/installation) and [set up a Redux store](https://redux.js.org/recipes/configuring-your-store/) in your app.
+### accepts(req)
 
-This assumes that you’re using [npm](http://npmjs.com/) package manager
-with a module bundler like [Webpack](https://webpack.js.org/) or
-[Browserify](http://browserify.org/) to consume [CommonJS
-modules](https://webpack.js.org/api/module-methods/#commonjs).
+Create a new `Accepts` object for the given `req`.
 
-If you don’t yet use [npm](http://npmjs.com/) or a modern module bundler, and would rather prefer a single-file [UMD](https://github.com/umdjs/umd) build that makes `ReactRedux` available as a global object, you can grab a pre-built version from [cdnjs](https://cdnjs.com/libraries/react-redux). We _don’t_ recommend this approach for any serious application, as most of the libraries complementary to Redux are only available on [npm](http://npmjs.com/).
+#### .charset(charsets)
 
-## Documentation
+Return the first accepted charset. If nothing in `charsets` is accepted,
+then `false` is returned.
 
-The React Redux docs are published at **https://react-redux.js.org** .
+#### .charsets()
 
-## How Does It Work?
+Return the charsets that the request accepts, in the order of the client's
+preference (most preferred first).
 
-The post [The History and Implementation of React-Redux](https://blog.isquaredsoftware.com/2018/11/react-redux-history-implementation/)
-explains what it does, how it works, and how the API and implementation have evolved over time.
+#### .encoding(encodings)
 
-There's also a [Deep Dive into React-Redux](https://blog.isquaredsoftware.com/2019/06/presentation-react-redux-deep-dive/) talk that covers some of the same material at a higher level.
+Return the first accepted encoding. If nothing in `encodings` is accepted,
+then `false` is returned.
+
+#### .encodings()
+
+Return the encodings that the request accepts, in the order of the client's
+preference (most preferred first).
+
+#### .language(languages)
+
+Return the first accepted language. If nothing in `languages` is accepted,
+then `false` is returned.
+
+#### .languages()
+
+Return the languages that the request accepts, in the order of the client's
+preference (most preferred first).
+
+#### .type(types)
+
+Return the first accepted type (and it is returned as the same text as what
+appears in the `types` array). If nothing in `types` is accepted, then `false`
+is returned.
+
+The `types` array can contain full MIME types or file extensions. Any value
+that is not a full MIME types is passed to `require('mime-types').lookup`.
+
+#### .types()
+
+Return the types that the request accepts, in the order of the client's
+preference (most preferred first).
+
+## Examples
+
+### Simple type negotiation
+
+This simple example shows how to use `accepts` to return a different typed
+respond body based on what the client wants to accept. The server lists it's
+preferences in order and will get back the best match between the client and
+server.
+
+```js
+var accepts = require('accepts')
+var http = require('http')
+
+function app (req, res) {
+  var accept = accepts(req)
+
+  // the order of this list is significant; should be server preferred order
+  switch (accept.type(['json', 'html'])) {
+    case 'json':
+      res.setHeader('Content-Type', 'application/json')
+      res.write('{"hello":"world!"}')
+      break
+    case 'html':
+      res.setHeader('Content-Type', 'text/html')
+      res.write('<b>hello, world!</b>')
+      break
+    default:
+      // the fallback is text/plain, so no need to specify it above
+      res.setHeader('Content-Type', 'text/plain')
+      res.write('hello, world!')
+      break
+  }
+
+  res.end()
+}
+
+http.createServer(app).listen(3000)
+```
+
+You can test this out with the cURL program:
+```sh
+curl -I -H'Accept: text/html' http://localhost:3000/
+```
 
 ## License
 
-[MIT](LICENSE.md)
+[MIT](LICENSE)
+
+[coveralls-image]: https://badgen.net/coveralls/c/github/jshttp/accepts/master
+[coveralls-url]: https://coveralls.io/r/jshttp/accepts?branch=master
+[github-actions-ci-image]: https://badgen.net/github/checks/jshttp/accepts/master?label=ci
+[github-actions-ci-url]: https://github.com/jshttp/accepts/actions/workflows/ci.yml
+[node-version-image]: https://badgen.net/npm/node/accepts
+[node-version-url]: https://nodejs.org/en/download
+[npm-downloads-image]: https://badgen.net/npm/dm/accepts
+[npm-url]: https://npmjs.org/package/accepts
+[npm-version-image]: https://badgen.net/npm/v/accepts

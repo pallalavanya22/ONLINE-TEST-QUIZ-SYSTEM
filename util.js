@@ -1,35 +1,11 @@
-const unicode = require('../lib/unicode')
-
-module.exports = {
-    isSpaceSeparator (c) {
-        return typeof c === 'string' && unicode.Space_Separator.test(c)
-    },
-
-    isIdStartChar (c) {
-        return typeof c === 'string' && (
-            (c >= 'a' && c <= 'z') ||
-        (c >= 'A' && c <= 'Z') ||
-        (c === '$') || (c === '_') ||
-        unicode.ID_Start.test(c)
-        )
-    },
-
-    isIdContinueChar (c) {
-        return typeof c === 'string' && (
-            (c >= 'a' && c <= 'z') ||
-        (c >= 'A' && c <= 'Z') ||
-        (c >= '0' && c <= '9') ||
-        (c === '$') || (c === '_') ||
-        (c === '\u200C') || (c === '\u200D') ||
-        unicode.ID_Continue.test(c)
-        )
-    },
-
-    isDigit (c) {
-        return typeof c === 'string' && /[0-9]/.test(c)
-    },
-
-    isHexDigit (c) {
-        return typeof c === 'string' && /[0-9A-Fa-f]/.test(c)
-    },
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.range = range;
+function range(from, to) {
+    const list = new Array(to - from + 1);
+    for (let i = 0; i < list.length; i += 1) {
+        list[i] = from + i;
+    }
+    return list;
 }
+//# sourceMappingURL=util.js.map
