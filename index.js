@@ -1,17 +1,6 @@
-'use strict';
-
-const pico = require('./lib/picomatch');
-const utils = require('./lib/utils');
-
-function picomatch(glob, options, returnState = false) {
-  // default to os.platform()
-  if (options && (options.windows === null || options.windows === undefined)) {
-    // don't mutate the original options object
-    options = { ...options, windows: utils.isWindows() };
-  }
-
-  return pico(glob, options, returnState);
+'use strict'
+if (process.env.NODE_ENV === 'production') {
+  module.exports = require('./react-redux.production.min.cjs')
+} else {
+  module.exports = require('./react-redux.development.cjs')
 }
-
-Object.assign(picomatch, pico);
-module.exports = picomatch;

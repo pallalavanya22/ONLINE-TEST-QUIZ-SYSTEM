@@ -1,29 +1,63 @@
-# PostCSS
+# React Redux
 
-<img align="right" width="95" height="95"
-     alt="Philosopher’s stone, logo of PostCSS"
-     src="https://postcss.org/logo.svg">
+Official React bindings for [Redux](https://github.com/reduxjs/redux).
+Performant and flexible.
 
-PostCSS is a tool for transforming styles with JS plugins.
-These plugins can lint your CSS, support variables and mixins,
-transpile future CSS syntax, inline images, and more.
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/reduxjs/react-redux/test.yml?style=flat-square) [![npm version](https://img.shields.io/npm/v/react-redux.svg?style=flat-square)](https://www.npmjs.com/package/react-redux)
+[![npm downloads](https://img.shields.io/npm/dm/react-redux.svg?style=flat-square)](https://www.npmjs.com/package/react-redux)
+[![#redux channel on Discord](https://img.shields.io/badge/discord-redux@reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
 
-PostCSS is used by industry leaders including Wikipedia, Twitter, Alibaba,
-and JetBrains. The [Autoprefixer] and [Stylelint] PostCSS plugins are some of the most popular CSS tools.
+## Installation
 
----
+### Create a React Redux App
 
-<img src="https://cdn.evilmartians.com/badges/logo-no-label.svg" alt="" width="22" height="16" />  Built by
- <b><a href="https://evilmartians.com/devtools?utm_source=postcss&utm_campaign=devtools-button&utm_medium=github">Evil Martians</a></b>, go-to agency for <b>developer tools</b>.
+The recommended way to start new apps with React and Redux is by using [our official Redux+TS template for Vite](https://github.com/reduxjs/redux-templates), or by creating a new Next.js project using [Next's `with-redux` template](https://github.com/vercel/next.js/tree/canary/examples/with-redux).
 
----
+Both of these already have Redux Toolkit and React-Redux configured appropriately for that build tool, and come with a small example app that demonstrates how to use several of Redux Toolkit's features.
 
-[Abstract Syntax Tree]: https://en.wikipedia.org/wiki/Abstract_syntax_tree
-[Evil Martians]:        https://evilmartians.com/?utm_source=postcss
-[Autoprefixer]:         https://github.com/postcss/autoprefixer
-[Stylelint]:            https://stylelint.io/
-[plugins]:              https://github.com/postcss/postcss#plugins
+```bash
+# Vite with our Redux+TS template
+# (using the `degit` tool to clone and extract the template)
+npx degit reduxjs/redux-templates/packages/vite-template-redux my-app
 
+# Next.js using the `with-redux` template
+npx create-next-app --example with-redux my-app
+```
 
-## Docs
-Read full docs **[here](https://postcss.org/)**.
+### An Existing React App
+
+React Redux 8.0 requires **React 16.8.3 or later** (or React Native 0.59 or later).
+
+To use React Redux with your React app, install it as a dependency:
+
+```bash
+# If you use npm:
+npm install react-redux
+
+# Or if you use Yarn:
+yarn add react-redux
+```
+
+You'll also need to [install Redux](https://redux.js.org/introduction/installation) and [set up a Redux store](https://redux.js.org/recipes/configuring-your-store/) in your app.
+
+This assumes that you’re using [npm](http://npmjs.com/) package manager
+with a module bundler like [Webpack](https://webpack.js.org/) or
+[Browserify](http://browserify.org/) to consume [CommonJS
+modules](https://webpack.js.org/api/module-methods/#commonjs).
+
+If you don’t yet use [npm](http://npmjs.com/) or a modern module bundler, and would rather prefer a single-file [UMD](https://github.com/umdjs/umd) build that makes `ReactRedux` available as a global object, you can grab a pre-built version from [cdnjs](https://cdnjs.com/libraries/react-redux). We _don’t_ recommend this approach for any serious application, as most of the libraries complementary to Redux are only available on [npm](http://npmjs.com/).
+
+## Documentation
+
+The React Redux docs are published at **https://react-redux.js.org** .
+
+## How Does It Work?
+
+The post [The History and Implementation of React-Redux](https://blog.isquaredsoftware.com/2018/11/react-redux-history-implementation/)
+explains what it does, how it works, and how the API and implementation have evolved over time.
+
+There's also a [Deep Dive into React-Redux](https://blog.isquaredsoftware.com/2019/06/presentation-react-redux-deep-dive/) talk that covers some of the same material at a higher level.
+
+## License
+
+[MIT](LICENSE.md)
