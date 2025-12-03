@@ -1,19 +1,19 @@
-# @babel/helper-plugin-utils
+# @babel/plugin-transform-react-jsx-self
 
-> General utilities for plugins to use
+> Add a __self prop to all JSX Elements
 
-See our website [@babel/helper-plugin-utils](https://babeljs.io/docs/babel-helper-plugin-utils) for more information.
+See our website [@babel/plugin-transform-react-jsx-self](https://babeljs.io/docs/babel-plugin-transform-react-jsx-self) for more information.
 
 ## Install
 
 Using npm:
 
 ```sh
-npm install --save @babel/helper-plugin-utils
+npm install --save-dev @babel/plugin-transform-react-jsx-self
 ```
 
 or using yarn:
 
 ```sh
-yarn add @babel/helper-plugin-utils
+yarn add @babel/plugin-transform-react-jsx-self --dev
 ```
