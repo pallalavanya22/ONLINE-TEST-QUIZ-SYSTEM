@@ -1,43 +1,10 @@
-import type { SourceMapSegment } from './sourcemap-segment';
-export interface SourceMapV3 {
-    file?: string | null;
-    names: readonly string[];
-    sourceRoot?: string;
-    sources: readonly (string | null)[];
-    sourcesContent?: readonly (string | null)[];
-    version: 3;
-    ignoreList?: readonly number[];
-}
-export interface EncodedSourceMap extends SourceMapV3 {
-    mappings: string;
-}
-export interface DecodedSourceMap extends SourceMapV3 {
-    mappings: readonly SourceMapSegment[][];
-}
-export interface Pos {
-    line: number;
-    column: number;
-}
-export interface OriginalPos extends Pos {
-    source: string;
-}
-export interface BindingExpressionRange {
-    start: Pos;
-    expression: string;
-}
-export type Mapping = {
-    generated: Pos;
-    source: undefined;
-    original: undefined;
-    name: undefined;
-} | {
-    generated: Pos;
-    source: string;
-    original: Pos;
-    name: string;
-} | {
-    generated: Pos;
-    source: string;
-    original: Pos;
-    name: undefined;
-};
+/**
+ * Temporary entry point of the types at the time of the transition.
+ * After transition done need to remove it in favor of index.ts
+ */
+export * from './index.js';
+/**
+ * Explicitly re-exporting to resolve the ambiguity.
+ */
+export { BarController, BubbleController, DoughnutController, LineController, PieController, PolarAreaController, RadarController, ScatterController, Animation, Animations, Chart, DatasetController, Interaction, Scale, Ticks, defaults, layouts, registry, ArcElement, BarElement, LineElement, PointElement, BasePlatform, BasicPlatform, DomPlatform, Decimation, Filler, Legend, SubTitle, Title, Tooltip, CategoryScale, LinearScale, LogarithmicScale, RadialLinearScale, TimeScale, TimeSeriesScale, PluginOptionsByType, ElementOptionsByType, ChartDatasetProperties, UpdateModeEnum, registerables } from './types/index.js';
+export * from './types/index.js';
