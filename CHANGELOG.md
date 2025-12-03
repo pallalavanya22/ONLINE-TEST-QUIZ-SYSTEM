@@ -5,63 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.1.0](https://github.com/es-shims/es-set-tostringtag/compare/v2.0.3...v2.1.0) - 2025-01-01
-
-### Commits
-
-- [actions] split out node 10-20, and 20+ [`ede033c`](https://github.com/es-shims/es-set-tostringtag/commit/ede033cc4e506c3966d2d482d4ac5987e329162a)
-- [types] use shared config [`28ef164`](https://github.com/es-shims/es-set-tostringtag/commit/28ef164ad7c5bc21837c79f7ef25542a1f258ade)
-- [New] add `nonConfigurable` option [`3bee3f0`](https://github.com/es-shims/es-set-tostringtag/commit/3bee3f04caddd318f3932912212ed20b2d62aad7)
-- [Fix] validate boolean option argument [`3c8a609`](https://github.com/es-shims/es-set-tostringtag/commit/3c8a609c795a305ccca163f0ff6956caa88cdc0e)
-- [Dev Deps] update `@arethetypeswrong/cli`, `@ljharb/eslint-config`, `@ljharb/tsconfig`, `@types/get-intrinsic`, `@types/tape`, `auto-changelog`, `tape` [`501a969`](https://github.com/es-shims/es-set-tostringtag/commit/501a96998484226e07f5ffd447e8f305a998f1d8)
-- [Tests] add coverage [`18af289`](https://github.com/es-shims/es-set-tostringtag/commit/18af2897b4e937373c9b8c8831bc338932246470)
-- [readme] document `force` option [`bd446a1`](https://github.com/es-shims/es-set-tostringtag/commit/bd446a107b71a2270278442e5124f45590d3ee64)
-- [Tests] use `@arethetypeswrong/cli` [`7c2c2fa`](https://github.com/es-shims/es-set-tostringtag/commit/7c2c2fa3cca0f4d263603adb75426b239514598f)
-- [Tests] replace `aud` with `npm audit` [`9e372d7`](https://github.com/es-shims/es-set-tostringtag/commit/9e372d7e6db3dab405599a14d9074a99a03b8242)
-- [Deps] update `get-intrinsic` [`7df1216`](https://github.com/es-shims/es-set-tostringtag/commit/7df12167295385c2a547410e687cb0c04f3a34b9)
-- [Deps] update `hasown` [`993a7d2`](https://github.com/es-shims/es-set-tostringtag/commit/993a7d200e2059fd857ec1a25d0a49c2c34ae6e2)
-- [Dev Deps] add missing peer dep [`148ed8d`](https://github.com/es-shims/es-set-tostringtag/commit/148ed8db99a7a94f9af3823fd083e6e437fa1587)
-
-## [v2.0.3](https://github.com/es-shims/es-set-tostringtag/compare/v2.0.2...v2.0.3) - 2024-02-20
-
-### Commits
-
-- add types [`d538513`](https://github.com/es-shims/es-set-tostringtag/commit/d5385133592a32a0a416cb535327918af7fbc4ad)
-- [Deps] update `get-intrinsic`, `has-tostringtag`, `hasown` [`d129b29`](https://github.com/es-shims/es-set-tostringtag/commit/d129b29536bccc8a9d03a47887ca4d1f7ad0c5b9)
-- [Dev Deps] update `aud`, `npmignore`, `tape` [`132ed23`](https://github.com/es-shims/es-set-tostringtag/commit/132ed23c964a41ed55e4ab4a5a2c3fe185e821c1)
-- [Tests] fix hasOwn require [`f89c831`](https://github.com/es-shims/es-set-tostringtag/commit/f89c831fe5f3edf1f979c597b56fee1be6111f56)
-
-## [v2.0.2](https://github.com/es-shims/es-set-tostringtag/compare/v2.0.1...v2.0.2) - 2023-10-20
-
-### Commits
-
-- [Refactor] use `hasown` instead of `has` [`0cc6c4e`](https://github.com/es-shims/es-set-tostringtag/commit/0cc6c4e61fd13e8f00b85424ae6e541ebf289e74)
-- [Dev Deps] update `@ljharb/eslint-config`, `aud`, `tape` [`70e447c`](https://github.com/es-shims/es-set-tostringtag/commit/70e447cf9f82b896ddf359fda0a0498c16cf3ed2)
-- [Deps] update `get-intrinsic` [`826aab7`](https://github.com/es-shims/es-set-tostringtag/commit/826aab76180392871c8efa99acc0f0bbf775c64e)
-
-## [v2.0.1](https://github.com/es-shims/es-set-tostringtag/compare/v2.0.0...v2.0.1) - 2023-01-05
+## [v1.0.2](https://github.com/inspect-js/has-tostringtag/compare/v1.0.1...v1.0.2) - 2024-02-01
 
 ### Fixed
 
-- [Fix] move `has` to prod deps [`#2`](https://github.com/es-shims/es-set-tostringtag/issues/2)
+- [Fix] move `has-symbols` back to prod deps [`#3`](https://github.com/inspect-js/has-tostringtag/issues/3)
+
+## [v1.0.1](https://github.com/inspect-js/has-tostringtag/compare/v1.0.0...v1.0.1) - 2024-02-01
 
 ### Commits
 
-- [Dev Deps] update `@ljharb/eslint-config` [`b9eecd2`](https://github.com/es-shims/es-set-tostringtag/commit/b9eecd23c10b7b43ba75089ac8ff8cc6b295798b)
+- [patch] add types [`9276414`](https://github.com/inspect-js/has-tostringtag/commit/9276414b22fab3eeb234688841722c4be113201f)
+- [meta] use `npmignore` to autogenerate an npmignore file [`5c0dcd1`](https://github.com/inspect-js/has-tostringtag/commit/5c0dcd1ff66419562a30d1fd88b966cc36bce5fc)
+- [actions] reuse common workflows [`dee9509`](https://github.com/inspect-js/has-tostringtag/commit/dee950904ab5719b62cf8d73d2ac950b09093266)
+- [actions] update codecov uploader [`b8cb3a0`](https://github.com/inspect-js/has-tostringtag/commit/b8cb3a0b8ffbb1593012c4c2daa45fb25642825d)
+- [Tests] generate coverage [`be5b288`](https://github.com/inspect-js/has-tostringtag/commit/be5b28889e2735cdbcef387f84c2829995f2f05e)
+- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `safe-publish-latest`, `tape` [`69a0827`](https://github.com/inspect-js/has-tostringtag/commit/69a0827974e9b877b2c75b70b057555da8f25a65)
+- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `aud`, `auto-changelog`, `tape` [`4c9e210`](https://github.com/inspect-js/has-tostringtag/commit/4c9e210a5682f0557a3235d36b68ce809d7fb825)
+- [actions] update rebase action to use reusable workflow [`ca8dcd3`](https://github.com/inspect-js/has-tostringtag/commit/ca8dcd3a6f3f5805d7e3fd461b654aedba0946e7)
+- [Dev Deps] update `@ljharb/eslint-config`, `aud`, `npmignore`, `tape` [`07f3eaf`](https://github.com/inspect-js/has-tostringtag/commit/07f3eafa45dd98208c94479737da77f9a69b94c4)
+- [Deps] update `has-symbols` [`999e009`](https://github.com/inspect-js/has-tostringtag/commit/999e0095a7d1749a58f55472ec8bf8108cdfdcf3)
+- [Tests] remove staging tests since they fail on modern node [`9d9526b`](https://github.com/inspect-js/has-tostringtag/commit/9d9526b1dc1ca7f2292b52efda4c3d857b0e39bd)
 
-## [v2.0.0](https://github.com/es-shims/es-set-tostringtag/compare/v1.0.0...v2.0.0) - 2022-12-21
+## v1.0.0 - 2021-08-05
 
 ### Commits
 
-- [Tests] refactor tests [`168dcfb`](https://github.com/es-shims/es-set-tostringtag/commit/168dcfbb535c279dc48ccdc89419155125aaec18)
-- [Breaking] do not set toStringTag if it is already set [`226ab87`](https://github.com/es-shims/es-set-tostringtag/commit/226ab874192c625d9e5f0e599d3f60d2b2aa83b5)
-- [New] add `force` option to set even if already set [`1abd4ec`](https://github.com/es-shims/es-set-tostringtag/commit/1abd4ecb282f19718c4518284b0293a343564505)
-
-## v1.0.0 - 2022-12-21
-
-### Commits
-
-- Initial implementation, tests, readme [`a0e1147`](https://github.com/es-shims/es-set-tostringtag/commit/a0e11473f79a233b46374525c962ea1b4d42418a)
-- Initial commit [`ffd4aff`](https://github.com/es-shims/es-set-tostringtag/commit/ffd4afffbeebf29aff0d87a7cfc3f7844e09fe68)
-- npm init [`fffe5bd`](https://github.com/es-shims/es-set-tostringtag/commit/fffe5bd1d1146d084730a387a9c672371f4a8fff)
-- Only apps should have lockfiles [`d363871`](https://github.com/es-shims/es-set-tostringtag/commit/d36387139465623e161a15dbd39120537f150c62)
+- Tests [`6b6f573`](https://github.com/inspect-js/has-tostringtag/commit/6b6f5734dc2058badb300ff0783efdad95fe1a65)
+- Initial commit [`2f8190e`](https://github.com/inspect-js/has-tostringtag/commit/2f8190e799fac32ba9b95a076c0255e01d7ce475)
+- [meta] do not publish github action workflow files [`6e08cc4`](https://github.com/inspect-js/has-tostringtag/commit/6e08cc4e0fea7ec71ef66e70734b2af2c4a8b71b)
+- readme [`94bed6c`](https://github.com/inspect-js/has-tostringtag/commit/94bed6c9560cbbfda034f8d6c260bb7b0db33c1a)
+- npm init [`be67840`](https://github.com/inspect-js/has-tostringtag/commit/be67840ab92ee7adb98bcc65261975543f815fa5)
+- Implementation [`c4914ec`](https://github.com/inspect-js/has-tostringtag/commit/c4914ecc51ddee692c85b471ae0a5d8123030fbf)
+- [meta] use `auto-changelog` [`4aaf768`](https://github.com/inspect-js/has-tostringtag/commit/4aaf76895ae01d7b739f2b19f967ef2372506cd7)
+- Only apps should have lockfiles [`bc4d99e`](https://github.com/inspect-js/has-tostringtag/commit/bc4d99e4bf494afbaa235c5f098df6e642edf724)
+- [meta] add `safe-publish-latest` [`6523c05`](https://github.com/inspect-js/has-tostringtag/commit/6523c05c9b87140f3ae74c9daf91633dd9ff4e1f)
