@@ -1,3 +1,4 @@
-declare function hasToStringTag(): boolean;
+import parse = require('./parse')
+import stringify = require('./stringify')
 
-export = hasToStringTag;
+export {parse, stringify}

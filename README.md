@@ -1,46 +1,100 @@
-# has-tostringtag <sup>[![Version Badge][2]][1]</sup>
+# mime-db
 
-[![github actions][actions-image]][actions-url]
-[![coverage][codecov-image]][codecov-url]
-[![dependency status][5]][6]
-[![dev dependency status][7]][8]
-[![License][license-image]][license-url]
-[![Downloads][downloads-image]][downloads-url]
+[![NPM Version][npm-version-image]][npm-url]
+[![NPM Downloads][npm-downloads-image]][npm-url]
+[![Node.js Version][node-image]][node-url]
+[![Build Status][ci-image]][ci-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 
-[![npm badge][11]][1]
+This is a large database of mime types and information about them.
+It consists of a single, public JSON file and does not include any logic,
+allowing it to remain as un-opinionated as possible with an API.
+It aggregates data from the following sources:
 
-Determine if the JS environment has `Symbol.toStringTag` support. Supports spec, or shams.
+- http://www.iana.org/assignments/media-types/media-types.xhtml
+- http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
+- http://hg.nginx.org/nginx/raw-file/default/conf/mime.types
 
-## Example
+## Installation
 
-```js
-var hasSymbolToStringTag = require('has-tostringtag');
-
-hasSymbolToStringTag() === true; // if the environment has native Symbol.toStringTag support. Not polyfillable, not forgeable.
-
-var hasSymbolToStringTagKinda = require('has-tostringtag/shams');
-hasSymbolToStringTagKinda() === true; // if the environment has a Symbol.toStringTag sham that mostly follows the spec.
+```bash
+npm install mime-db
 ```
 
-## Supported Symbol shams
- - get-own-property-symbols [npm](https://www.npmjs.com/package/get-own-property-symbols) | [github](https://github.com/WebReflection/get-own-property-symbols)
- - core-js [npm](https://www.npmjs.com/package/core-js) | [github](https://github.com/zloirock/core-js)
+### Database Download
 
-## Tests
-Simply clone the repo, `npm install`, and run `npm test`
+If you're crazy enough to use this in the browser, you can just grab the
+JSON file using [jsDelivr](https://www.jsdelivr.com/). It is recommended to
+replace `master` with [a release tag](https://github.com/jshttp/mime-db/tags)
+as the JSON format may change in the future.
 
-[1]: https://npmjs.org/package/has-tostringtag
-[2]: https://versionbadg.es/inspect-js/has-tostringtag.svg
-[5]: https://david-dm.org/inspect-js/has-tostringtag.svg
-[6]: https://david-dm.org/inspect-js/has-tostringtag
-[7]: https://david-dm.org/inspect-js/has-tostringtag/dev-status.svg
-[8]: https://david-dm.org/inspect-js/has-tostringtag#info=devDependencies
-[11]: https://nodei.co/npm/has-tostringtag.png?downloads=true&stars=true
-[license-image]: https://img.shields.io/npm/l/has-tostringtag.svg
-[license-url]: LICENSE
-[downloads-image]: https://img.shields.io/npm/dm/has-tostringtag.svg
-[downloads-url]: https://npm-stat.com/charts.html?package=has-tostringtag
-[codecov-image]: https://codecov.io/gh/inspect-js/has-tostringtag/branch/main/graphs/badge.svg
-[codecov-url]: https://app.codecov.io/gh/inspect-js/has-tostringtag/
-[actions-image]: https://img.shields.io/endpoint?url=https://github-actions-badge-u3jn4tfpocch.runkit.sh/inspect-js/has-tostringtag
-[actions-url]: https://github.com/inspect-js/has-tostringtag/actions
+```
+https://cdn.jsdelivr.net/gh/jshttp/mime-db@master/db.json
+```
+
+## Usage
+
+```js
+var db = require('mime-db')
+
+// grab data on .js files
+var data = db['application/javascript']
+```
+
+## Data Structure
+
+The JSON file is a map lookup for lowercased mime types.
+Each mime type has the following properties:
+
+- `.source` - where the mime type is defined.
+    If not set, it's probably a custom media type.
+    - `apache` - [Apache common media types](http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types)
+    - `iana` - [IANA-defined media types](http://www.iana.org/assignments/media-types/media-types.xhtml)
+    - `nginx` - [nginx media types](http://hg.nginx.org/nginx/raw-file/default/conf/mime.types)
+- `.extensions[]` - known extensions associated with this mime type.
+- `.compressible` - whether a file of this type can be gzipped.
+- `.charset` - the default charset associated with this type, if any.
+
+If unknown, every property could be `undefined`.
+
+## Contributing
+
+To edit the database, only make PRs against `src/custom-types.json` or
+`src/custom-suffix.json`.
+
+The `src/custom-types.json` file is a JSON object with the MIME type as the
+keys and the values being an object with the following keys:
+
+- `compressible` - leave out if you don't know, otherwise `true`/`false` to
+  indicate whether the data represented by the type is typically compressible.
+- `extensions` - include an array of file extensions that are associated with
+  the type.
+- `notes` - human-readable notes about the type, typically what the type is.
+- `sources` - include an array of URLs of where the MIME type and the associated
+  extensions are sourced from. This needs to be a [primary source](https://en.wikipedia.org/wiki/Primary_source);
+  links to type aggregating sites and Wikipedia are _not acceptable_.
+
+To update the build, run `npm run build`.
+
+### Adding Custom Media Types
+
+The best way to get new media types included in this library is to register
+them with the IANA. The community registration procedure is outlined in
+[RFC 6838 section 5](http://tools.ietf.org/html/rfc6838#section-5). Types
+registered with the IANA are automatically pulled into this library.
+
+If that is not possible / feasible, they can be added directly here as a
+"custom" type. To do this, it is required to have a primary source that
+definitively lists the media type. If an extension is going to be listed as
+associateed with this media type, the source must definitively link the
+media type and extension as well.
+
+[ci-image]: https://badgen.net/github/checks/jshttp/mime-db/master?label=ci
+[ci-url]: https://github.com/jshttp/mime-db/actions?query=workflow%3Aci
+[coveralls-image]: https://badgen.net/coveralls/c/github/jshttp/mime-db/master
+[coveralls-url]: https://coveralls.io/r/jshttp/mime-db?branch=master
+[node-image]: https://badgen.net/npm/node/mime-db
+[node-url]: https://nodejs.org/en/download
+[npm-downloads-image]: https://badgen.net/npm/dm/mime-db
+[npm-url]: https://npmjs.org/package/mime-db
+[npm-version-image]: https://badgen.net/npm/v/mime-db
